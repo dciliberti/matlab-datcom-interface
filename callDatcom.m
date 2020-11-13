@@ -13,16 +13,16 @@ if exist(s.name) == 2 %#ok<EXIST>
 end
 
 % Digital Datcom execution and output retrieving
-writeDatcomInput(s)
-disp(['Executing DATCOM for ',s.name])
-dos([s.name,'.dcm']);
-aero = datcomimport([s.name,'.out']);
+filename = writeDatcomInput(s);
+disp(['Executing DATCOM for ',filename])
+dos([filename,'.dcm']);
+aero = datcomimport([filename,'.out']);
 
 % Move datcom files into output folder
 if ~exist('output','dir')
     mkdir output
 end
-movefile([s.name,'*.*'],'output')
+movefile([filename,'*.*'],'output')
 
 % Return output
 aero = aero{1};

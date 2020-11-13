@@ -1,4 +1,4 @@
-function writeDatcomInput(s)
+function filename = writeDatcomInput(s)
 
 disp('Writing DATCOM input file...')
 
@@ -36,7 +36,20 @@ wingclose = [varindent,'DHDADI=%.2f, TYPE=%.2f$\n\n'];
 wingprof = 'NACA W %s %s\n\n';
 
 % Write Digital Datcom input file
-fid = fopen([s.name,'.dcm'],'w');
+filename = s.name;
+filename = regexprep(filename, ' ', '_');   % check if there are unvalid
+filename = regexprep(filename, '\', '_');   % characters in file name
+filename = regexprep(filename, '=', '_');
+filename = regexprep(filename, '°', '');
+filename = regexprep(filename,'_+','_');    % suppress consecutive underscores
+if ~strcmp(s.name,filename)
+   warning([s.name,' contains unvalid characters. ',...
+       'The name tag will be preserved, but the file has been renamed as ',...
+       filename]) 
+end
+pause(5)
+
+fid = fopen([filename,'.dcm'],'w');
 fprintf(fid,'*\n');
 fprintf(fid,'*   %s\n',s.name);
 fprintf(fid,'*\n\n');
@@ -82,7 +95,7 @@ fprintf(fid,wingprof,s.airfoiltype,s.airfoilname);
 fprintf(fid,s.caseid);
 fclose(fid);
 
-disp(['DATCOM input file written into: ', s.name,'.dcm'])
+disp(['DATCOM input file written into: ', filename,'.dcm'])
 
 
 

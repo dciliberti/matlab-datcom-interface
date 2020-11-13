@@ -9,7 +9,7 @@
 close all; clearvars; clc
 
 %% Input Section
-s.name = 'Wing_AR6_sweep0';
+s.name = 'Wing AR = 6 \Lambda = 0°';
 
 s.dim = 'M';
 s.deriv = 'RAD';
@@ -50,19 +50,19 @@ wing11 = callDatcom(s);
 wing11.name = s.name;
 
 % Change some parameters, execute again and store data
-s.name = 'Wing_AR6_sweep30';
+s.name = 'Wing AR = 6 \Lambda = 30°';
 s.sweep = 30;
 s.caseid = ['CASEID ',s.name];
 wing12 = callDatcom(s);
 wing12.name = s.name;
 
-s.name = 'Wing_AR6_sweep45';
+s.name = 'Wing AR = 6 \Lambda = 45°';
 s.sweep = 45;
 s.caseid = ['CASEID ',s.name];
 wing13 = callDatcom(s);
 wing13.name = s.name;
 
-s.name = 'Wing_AR2_sweep0';
+s.name = 'Wing AR = 2 \Lambda = 0°';
 s.sweep = 0;
 s.blref = 2;
 s.sref = 2;
@@ -72,13 +72,13 @@ s.caseid = ['CASEID ',s.name];
 wing21 = callDatcom(s);
 wing21.name = s.name;
 
-s.name = 'Wing_AR2_sweep30';
+s.name = 'Wing AR = 2 \Lambda = 30°';
 s.sweep = 30;
 s.caseid = ['CASEID ',s.name];
 wing22 = callDatcom(s);
 wing22.name = s.name;
 
-s.name = 'Wing_AR2_sweep45';
+s.name = 'Wing AR = 2 \Lambda = 45°';
 s.sweep = 45;
 s.caseid = ['CASEID ',s.name];
 wing23 = callDatcom(s);
@@ -118,8 +118,9 @@ text(1.22,8,'$$ \leftarrow C_{L_\alpha} = \frac{4}{\sqrt{M^2-1}} $$',...
 
 hold off
 grid on
-xlabel('Mach')
+xlabel('Mach number')
 ylabel('Lift curve slope, /rad')
-legend(legendnames,'interpreter','none')
+title('Untapered wings with thin airfoil')
+legend(legendnames,'interpreter','tex')
 
 disp('END')

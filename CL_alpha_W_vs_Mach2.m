@@ -9,7 +9,7 @@
 close all; clearvars; clc
 
 %% Input Section
-s.name = 'NACA_0012';
+s.name = 'NACA 0012';
 
 s.dim = 'M';
 s.deriv = 'RAD';
@@ -50,7 +50,7 @@ wing1 = callDatcom(s);
 wing1.name = s.name;
 
 % Change some parameters, execute again and store data
-s.name = 'Lenticular_0.01';
+s.name = 'Thin supersonic';
 s.airfoiltype = 'S';
 s.airfoilname = '2-30.0-1.0';
 s.caseid = ['CASEID ',s.name];
@@ -58,6 +58,10 @@ wing2 = callDatcom(s);
 wing2.name = s.name;
 
 %% Plot section
+AR = s.blref^2/s.sref;
+Lambda = s.sweep;
+taper = s.ctip/s.croot;
+
 figure
 hold on
 
@@ -67,13 +71,15 @@ hold on
 
 clearvars s appo lista
 lista = whos;
+c = 0;  % counter
 for idx = 1:length(lista) % cycle over struct variables in the workspace
     if strcmp(lista(idx).class,'struct')
+        c = c + 1;
         appo = eval(lista(idx).name);
         xx = linspace(appo.mach(1),appo.mach(end));
         yy = spline(appo.mach,appo.cla,xx);
         plot(xx,yy,'LineWidth',2)
-        legendnames{idx} = appo.name; %#ok<SAGROW>
+        legendnames{c} = appo.name; %#ok<SAGROW>
     end
 end
 
@@ -91,8 +97,11 @@ text(1.22,8,'$$ \leftarrow C_{L_\alpha} = \frac{4}{\sqrt{M^2-1}} $$',...
 
 hold off
 grid on
-xlabel('Mach')
+xlabel('Mach number')
 ylabel('Lift curve slope, /rad')
-legend(legendnames,'interpreter','none')
+title(['AR = ',num2str(AR),...
+    '    \Lambda = ',num2str(Lambda),'°',...
+    '    \lambda = ',num2str(taper,'%.1f')])
+legend(legendnames,'interpreter','tex')
 
 disp('END')
