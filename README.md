@@ -11,6 +11,7 @@ Actually, it writes flight conditions, reference parameters, and wing planform d
 Input data is a MATLAB struct containing namelists to be written in a `.dcm` file. The output is read with the
 `datcomimport` function of the MATLAB Aerospace Toolset and returned as a struct.
 
-Two examples are included:
+Three examples are included:
  * `CL_alpha_W_vs_Mach1.m` showing the variation of the wing lift gradient with Mach number for different wing planforms with thin airfoils
- * `CL_alpha_W_vs_Mach2.m` showing the variation of the wing lift gradient with Mach number for the same wing with different airfoils 
+ * `CL_alpha_W_vs_Mach2.m` showing the variation of the wing lift gradient with Mach number for the same wing with different airfoils
+ * `Xac_vs_Mach.m` showing the variation of aerodynamic center position with Mach number
